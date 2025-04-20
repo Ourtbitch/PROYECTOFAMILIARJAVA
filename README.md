@@ -6,7 +6,8 @@
 
 El *Sistema de Ahorro Digital Familiar* es una aplicación de escritorio desarrollada en Java que tiene como objetivo facilitar la gestión organizada, colaborativa y transparente de los ahorros dentro de una familia. Actualmente, el desarrollo se encuentra en su **fase inicial**, centrado en la implementación de un sistema de **autenticación segura** para controlar el acceso a la plataforma según el rol del usuario.
 
-## 🚀 Funcionalidades
+## 🚀 Funcionalidades 
+
 
 ### ✅ Implementadas (Fase Inicial)
 
@@ -49,9 +50,16 @@ AHORROFAMILIAR/
 │   └── main/
 │       └── java/
 │           └── com/ahorrofamiliar/
-│               ├── models/          # Clases de entidades (Usuario, Rol)
-│               ├── utils/           # Clases utilitarias (DatabaseConnection)
-│               └── views/           # Interfaz gráfica (LoginView, App)
+│               ├── database/          # Capa de acceso a datos
+│               │   └── UsuarioDAO.java
+│               ├── models/             # Clases de entidades
+│               │   └── Usuario.java
+│               ├── service/            # Lógica de negocio
+│               │   └── AuthService.java
+│               ├── utils/              # Clases utilitarias
+│               │   └── DatabaseConnection.java
+│               └── views/              # Interfaz gráfica
+│                   └── LoginView.java
 ├── resources/                        # Archivos de configuración (vacío por ahora)
 ├── target/                           # Archivos generados por Maven
 ├── pom.xml                           # Archivo de configuración de Maven
@@ -63,7 +71,7 @@ AHORROFAMILIAR/
 
 1. **Clona el repositorio:**
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/Ourtbitch/PROYECTOFAMILIARJAVA
    ```
 
 2. **Configura la base de datos:**
