@@ -1,0 +1,30 @@
+# Archivos de compilación de Java
+*.class
+target/
+bin/
+
+# Archivos de IDE de IntelliJ IDEA (si los usas)
+.idea/
+*.iml
+
+# Archivos de IDE de Eclipse (si los usas)
+.classpath
+.project
+.settings/
+
+# Archivos de build de Maven
+.mvn/wrapper/target/
+.mvn/wrapper/maven-wrapper.jar
+
+# Archivos de VS Code específicos del proyecto
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Otros archivos temporales o de log que no quieras commitear
+*.log
+*.tmp
