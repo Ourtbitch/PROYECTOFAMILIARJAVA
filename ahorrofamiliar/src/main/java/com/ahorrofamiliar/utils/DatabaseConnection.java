@@ -15,26 +15,14 @@ public class DatabaseConnection {
         // Constructor privado para evitar instanciación directa
     }
 
-    public static Connection getConnection() {
-        if (conexion == null) {
-            synchronized (DatabaseConnection.class) {
-                if (conexion == null) {
-                    try {
-                        // Cargar el driver de MySQL (opcional en versiones recientes)
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENIA);
-                        System.out.println("Conexión a la base de datos exitosa.");
-                    } catch (ClassNotFoundException e) {
-                        System.err.println("Error: No se encontró el driver de MySQL.");
-                        e.printStackTrace();
-                    } catch (SQLException e) {
-                        System.err.println("Error al conectar a la base de datos.");
-                        e.printStackTrace();
-                    }
-                }
-            }
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // opcional si ya está cargado
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error: No se encontró el driver de MySQL.");
+            e.printStackTrace();
         }
-        return conexion;
+        return DriverManager.getConnection(URL, USUARIO, CONTRASENIA);
     }
 
     public static void closeConnection() {
@@ -50,11 +38,4 @@ public class DatabaseConnection {
         }
     }
 
-    public static void main(String[] args) {
-        // Método de prueba para verificar la conexión
-        Connection conn = DatabaseConnection.getConnection();
-        if (conn != null) {
-            DatabaseConnection.closeConnection();
-        }
-    }
 }

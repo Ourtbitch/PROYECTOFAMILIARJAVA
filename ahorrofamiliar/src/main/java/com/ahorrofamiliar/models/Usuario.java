@@ -1,8 +1,10 @@
 package com.ahorrofamiliar.models;
 
 public class Usuario {
+
     private int id;
     private int idRol;
+    private int Id_tip_doc;
     private String nombre;
     private String apellido;
     private String tipoDocumento;
@@ -16,12 +18,12 @@ public class Usuario {
     }
 
     // Constructor con todos los campos (puedes elegir los que necesites al crear un nuevo usuario)
-    public Usuario(int id, int idRol, String nombre, String apellido, String tipoDocumento, String numeroDocumento, String sexo, String situacion, String contrasenia) {
+    public Usuario(int id, int idRol, String nombre, String apellido, int Id_tip_doc, String numeroDocumento, String sexo, String situacion, String contrasenia) {
         this.id = id;
         this.idRol = idRol;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.tipoDocumento = tipoDocumento;
+        this.Id_tip_doc = Id_tip_doc;
         this.numeroDocumento = numeroDocumento;
         this.sexo = sexo;
         this.situacion = situacion;
@@ -101,18 +103,19 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
+    public int getId_tip_doc() {
+        return Id_tip_doc;
+    }
+
+    public void setId_tip_doc(int Id_tip_doc) {
+        this.Id_tip_doc = Id_tip_doc;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", idRol=" + idRol +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", tipoDocumento='" + tipoDocumento + '\'' +
-                ", numeroDocumento='" + numeroDocumento + '\'' +
-                ", sexo='" + sexo + '\'' +
-                ", situacion='" + situacion + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
+        return nombre + " " + apellido;
     }
+
+    
+
 }

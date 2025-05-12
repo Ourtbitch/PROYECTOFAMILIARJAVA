@@ -2,6 +2,7 @@ package com.ahorrofamiliar.views;
 
 import com.ahorrofamiliar.models.Usuario;
 import com.ahorrofamiliar.service.AuthService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +10,7 @@ import java.awt.event.ActionListener;
 
 public class LoginView extends JFrame implements ActionListener {
 
-    private JTextField nombreField;
-    private JTextField apellidoField;
+    private JTextField dniField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JLabel messageLabel;
@@ -18,26 +18,19 @@ public class LoginView extends JFrame implements ActionListener {
 
     public LoginView() {
         authService = new AuthService();
+
         setTitle("Ingreso al Sistema");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 250); // Aumentamos la altura para el nuevo campo
-        setLayout(new GridLayout(5, 1, 10, 10)); // 5 filas ahora
+        setSize(300, 200);
+        setLayout(new GridLayout(4, 1, 10, 10)); // 4 filas: DNI, contraseña, botón, mensaje
 
-        // Panel para el campo de nombre
-        JPanel nombrePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel nombreLabel = new JLabel("Nombre:");
-        nombreField = new JTextField(15);
-        nombrePanel.add(nombreLabel);
-        nombrePanel.add(nombreField);
-        add(nombrePanel);
-
-        // Panel para el campo de apellido
-        JPanel apellidoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel apellidoLabel = new JLabel("Apellido:");
-        apellidoField = new JTextField(15);
-        apellidoPanel.add(apellidoLabel);
-        apellidoPanel.add(apellidoField);
-        add(apellidoPanel);
+        // Panel para el campo de DNI
+        JPanel dniPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel dniLabel = new JLabel("DNI:");
+        dniField = new JTextField(15);
+        dniPanel.add(dniLabel);
+        dniPanel.add(dniField);
+        add(dniPanel);
 
         // Panel para el campo de contraseña
         JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -54,7 +47,7 @@ public class LoginView extends JFrame implements ActionListener {
         buttonPanel.add(loginButton);
         add(buttonPanel);
 
-        // Etiqueta para mostrar mensajes (éxito o error)
+        // Etiqueta para mostrar mensajes
         messageLabel = new JLabel("");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(messageLabel);
@@ -62,34 +55,59 @@ public class LoginView extends JFrame implements ActionListener {
         setVisible(true);
         setLocationRelativeTo(null); // Centrar la ventana
     }
-
+    //Misael CHALLCO - INI 11/5 - SE AGREGA  METODOS PARA QUITAR REDUNDANCIA
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            String nombre = nombreField.getText();
-            String apellido = apellidoField.getText();
+            String dni = dniField.getText().trim();
             String password = new String(passwordField.getPassword());
 
-            Usuario usuarioAutenticado = authService.autenticarUsuario(nombre, apellido, password);
-
-            if (usuarioAutenticado != null) {
-                messageLabel.setForeground(Color.GREEN);
-                messageLabel.setText("Ingreso exitoso como: " + usuarioAutenticado.getNombre() + " " + usuarioAutenticado.getApellido());
-                // Aquí podrías abrir la ventana principal de la aplicación
-                // Por ahora, solo mostramos un mensaje
-            } else {
-                messageLabel.setForeground(Color.RED);
-                messageLabel.setText("Credenciales incorrectas.");
+            if (dni.isEmpty() || password.isEmpty()) {
+                mostrarMensaje("Por favor, ingrese DNI y contraseña.", Color.RED);
+                return;
             }
 
-            // Opcional: Limpiar los campos después del intento
-            nombreField.setText("");
-            apellidoField.setText("");
-            passwordField.setText("");
+            Usuario usuario = authService.autenticarUsuarioPorDni(dni, password);
+
+            if (usuario != null) {
+                mostrarMensaje("Ingreso exitoso como: " + usuario.getNombre() + " " + usuario.getApellido(), Color.GREEN);
+
+                // Abrir menú según rol
+                SwingUtilities.invokeLater(() -> {
+                    switch (usuario.getIdRol()) {
+                        case 1 ->
+                            new MenuAdmin().setVisible(true);
+                        case 2 ->
+                            new MenuRol2().setVisible(true);
+                        default ->
+                            new MenuRol3().setVisible(true);
+                    }
+                    dispose();
+                });
+
+            } else {
+                mostrarMensaje("Credenciales incorrectas.", Color.RED);
+            }
+
+            limpiarCampos();
         }
+    }
+
+    // Método para mostrar mensaje en la etiqueta con color personalizado
+    private void mostrarMensaje(String mensaje, Color color) {
+        messageLabel.setText(mensaje);
+        messageLabel.setForeground(color);
+    }
+
+    private void limpiarCampos() {
+        dniField.setText("");
+        passwordField.setText("");
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new LoginView());
     }
 }
+
+
+    //Misael CHALLCO - FIN 11/5 - SE AGREGA  METODOS PARA QUITAR REDUNDANCIA

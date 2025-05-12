@@ -16,9 +16,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE120</version> <!-- Versión común en NetBeans 12+ -->
+        </dependency>
+        <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.33</version>                                                                                                                                                                                                                                               
+            <version>8.0.33</version>        
+                                                                                                                                                                                                                                                   
         </dependency>
     </dependencies>
 
@@ -31,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ahorrofamiliar.App</mainClass>
+                            <mainClass>com.ahorrofamiliar.views.LoginView</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
