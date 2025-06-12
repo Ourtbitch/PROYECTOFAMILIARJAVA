@@ -8,12 +8,12 @@ package com.ahorrofamiliar.views;
  *
  * @author Alondra
  */
-public class MenuAdmin extends javax.swing.JFrame {
+public class MenuIntegranteFamiliar extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuAdmin
      */
-    public MenuAdmin() {
+    public MenuIntegranteFamiliar() {
         initComponents();
         setLocationRelativeTo(null); // Centrar la ventana
     }
@@ -34,11 +34,8 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnMeta = new javax.swing.JButton();
         btnFuntesIngreso = new javax.swing.JButton();
         btnBuscarFIngreso = new javax.swing.JButton();
-        btnGestionContrasena = new javax.swing.JButton();
         BtnAportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -76,13 +73,6 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnGestionContrasena.setText("Gestionar Contraseña");
-        btnGestionContrasena.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGestionContrasenaActionPerformed(evt);
-            }
-        });
-
         BtnAportes.setText("Aportes");
         BtnAportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,21 +82,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("MENU ADMIN");
-
-        jButton2.setText("Estado Usuario");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Cierre Mes");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("MENU INTEGRANTE FAMILIAR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,20 +91,13 @@ public class MenuAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
-                        .addGap(388, 388, 388)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnAportes)
-                            .addComponent(btnBuscarFIngreso)
-                            .addComponent(btnFuntesIngreso)
-                            .addComponent(btnGestionContrasena))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(BtnAportes)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarFIngreso)
+                    .addComponent(btnFuntesIngreso))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,25 +105,19 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUsuario)
-                    .addComponent(btnBuscarFIngreso))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMeta)
-                    .addComponent(btnFuntesIngreso))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(BtnAportes))
+                .addComponent(btnUsuario)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGestionContrasena))
+                        .addGap(114, 114, 114)
+                        .addComponent(btnFuntesIngreso))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton2)))
-                .addContainerGap(183, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMeta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarFIngreso)))
+                .addGap(18, 18, 18)
+                .addComponent(BtnAportes)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,37 +160,6 @@ public class MenuAdmin extends javax.swing.JFrame {
            
     }//GEN-LAST:event_btnFuntesIngresoActionPerformed
 
-    private void btnGestionContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionContrasenaActionPerformed
-        // TODO add your handling code here:
-        
-        // Abrir ventana de Gestión de Contraseña
-        GestionContrasenaForm gestionContrasenaForm = new GestionContrasenaForm(1); // Pasar el ID de usuario adecuado
-        gestionContrasenaForm.setVisible(true);
-        this.setVisible(false); // Solo oculta el menú
-    }                                                   
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuAdmin().setVisible(true);
-            }
-        });
-    
-    }//GEN-LAST:event_btnGestionContrasenaActionPerformed
-
     private void btnBuscarFIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFIngresoActionPerformed
         // TODO add your handling code here:
         BuscarFuentesIngresoForm buscarForm = new BuscarFuentesIngresoForm();
@@ -246,15 +178,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         consul.setVisible(true);
     }//GEN-LAST:event_btnMetaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       new com.ahorrofamiliar.views.EstadoUsuarioView().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        CierreMeta consul= new CierreMeta();
-        consul.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -264,11 +187,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton BtnAportes;
     private javax.swing.JButton btnBuscarFIngreso;
     private javax.swing.JButton btnFuntesIngreso;
-    private javax.swing.JButton btnGestionContrasena;
     private javax.swing.JButton btnMeta;
     private javax.swing.JButton btnUsuario;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

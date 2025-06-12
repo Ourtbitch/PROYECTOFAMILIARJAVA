@@ -62,6 +62,35 @@ public class GestionContrasenaDAO {
 
         return historial;
     }
+    
+    //jimmy
+    public boolean esContrasenaReciente(int idUsuario, String contrasenaHash) {
+    Connection conexion = null;
+    PreparedStatement statement = null;
+    ResultSet resultado = null;
+    
+    try {
+        conexion = DatabaseConnection.getConnection();
+        String sql = "SELECT COUNT(*) FROM gestion_contrasena " +
+                     "WHERE id_usuario = ? AND contrasena_hash = ? " +
+                     "AND fecha_cambio >= DATE_SUB(NOW(), INTERVAL 6 MONTH)";
+        statement = conexion.prepareStatement(sql);
+        statement.setInt(1, idUsuario);
+        statement.setString(2, contrasenaHash);
+        resultado = statement.executeQuery();
+        
+        if (resultado.next()) {
+            return resultado.getInt(1) > 0;
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al verificar contraseña reciente: " + e.getMessage());
+    } finally {
+        // Cerrar recursos
+    }
+    return false;
+}
+    
+    //jimmy
 
     public boolean registrarCambioContrasena(GestionContrasena gestion) {
         Connection conexion = null;

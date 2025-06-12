@@ -113,9 +113,9 @@ public class UsuarioDAO {
 
             // Verificación inmediata
             if (filasAfectadas > 0) {
-                System.out.println("Verificando actualización...");
-                String contraseñaActual = obtenerContrasena(idUsuario);
-                System.out.println("Contraseña en BD después de actualizar: " + contraseñaActual);
+                System.out.println("Verificando actualizacion...");
+                String contraseniaActual = obtenerContrasena(idUsuario);
+                System.out.println("Contrasenia en BD después de actualizar: " + contraseniaActual);
             }
 
             return filasAfectadas > 0;

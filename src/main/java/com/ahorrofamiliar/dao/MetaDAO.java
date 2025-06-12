@@ -10,6 +10,7 @@ package com.ahorrofamiliar.dao;
  */
 import com.ahorrofamiliar.models.Meta;
 import com.ahorrofamiliar.utils.DatabaseConnection;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -121,6 +122,45 @@ public class MetaDAO {
         }
         return lista;
     }
+    
+    public List<Meta> consulta_cierre(String estado) {
+
+        List<Meta> lista = new ArrayList();
+        Meta p = null;
+        String sql = null;
+        Connection cn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            cn = DatabaseConnection.getConnection();
+            if (estado.equals("") ) {
+                sql = "SELECT id,nombre_meta,Importe_final_e,Importe_final_r,fecha_creacion,Fecha_fin,Estado FROM meta where situacion= 'A'";
+                statement = cn.prepareStatement(sql);
+                rs = statement.executeQuery();
+            }else {
+                sql = "SELECT id,nombre_meta,Importe_final_e,Importe_final_r,fecha_creacion,Fecha_fin,Estado FROM meta where situacion= 'A' and Estado= ?";
+                statement = cn.prepareStatement(sql);
+                statement.setString(1, estado);
+                rs = statement.executeQuery();
+            }
+
+            while (rs.next()) {
+                p = new Meta();
+                p.setId(rs.getInt(1));
+                p.setNombre_meta(rs.getString(2));
+                p.setImporte_Final_e(rs.getDouble(3));
+                p.setImporte_Final_r(rs.getDouble(4));
+                p.setFecha_creacion(rs.getDate(5));
+                p.setFecha_fin(rs.getDate(6));
+                p.setEstado(rs.getString(7));
+                lista.add(p);
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
 
     //metodo adicionar
     public void adicion(Meta p) {
@@ -187,6 +227,25 @@ public class MetaDAO {
             st.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    public void CalculaMontosMeta(int id_meta, String anio_mes) {
+        
+        String procedimiento = "{ CALL Cerrar_X_META(?, ?) }";
+
+        try (Connection conn = DatabaseConnection.getConnection() ;
+             CallableStatement stmt = conn.prepareCall(procedimiento)) {
+
+            // Asignar parámetros
+            stmt.setInt(1, id_meta);
+            stmt.setString(2, anio_mes);
+
+            // Ejecutar procedimiento
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

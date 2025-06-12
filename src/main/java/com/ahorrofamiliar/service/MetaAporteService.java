@@ -183,6 +183,10 @@ public class MetaAporteService {
     public List<MetaAporteDTO> buscarAportesPorDni(String dni) throws SQLException {
         return metaAporteDAO.listarAportesPorDni(dni);
     }
+    
+        public List<MetaAporteDTO> listarAportesPorMETA(int ID_meta) throws SQLException {
+        return metaAporteDAO.listarAportesPorMETA(ID_meta);
+    }
 
     public List<MetaAporteDTO> listarTodosAportes() throws SQLException {
         return metaAporteDAO.listarTodosAportes();

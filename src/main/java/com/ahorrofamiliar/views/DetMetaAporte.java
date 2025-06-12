@@ -121,6 +121,11 @@ public class DetMetaAporte extends javax.swing.JFrame {
         btSalir.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btSalir.setForeground(new java.awt.Color(255, 255, 255));
         btSalir.setText("X");
+        btSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,6 +166,11 @@ public class DetMetaAporte extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAporteEstimadoActionPerformed
 
+    private void btSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,6 +196,8 @@ public class DetMetaAporte extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DetMetaAporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

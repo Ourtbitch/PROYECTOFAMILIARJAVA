@@ -205,4 +205,33 @@ public class MetaAporteDAO {
     }
 
     // Puedes agregar aquí otros métodos que necesites para listar, actualizar o eliminar aportes.
+    
+    public List<MetaAporteDTO> listarAportesPorMETA(int ID_meta) throws SQLException {
+        List<MetaAporteDTO> lista = new ArrayList<>();
+        String sql = "SELECT ma.id, m.nombre_meta, CONCAT(u.nombre, ' ', u.apellido) AS nombre_usuario, "
+                + "ma.Aporte_Estimado, ma.Aporte_Real, ma.Fecha_Registro, ma.Situacion "
+                + "FROM meta_aporte ma "
+                + "JOIN meta m ON ma.id_meta = m.id "
+                + "JOIN usuario u ON ma.id_usuario = u.id "
+                + "WHERE m.id = ?";
+        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, ID_meta);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    MetaAporteDTO dto = new MetaAporteDTO(
+                            rs.getInt("id"),
+                            rs.getString("nombre_meta"),
+                            rs.getString("nombre_usuario"),
+                            rs.getDouble("Aporte_Estimado"),
+                            rs.getDouble("Aporte_Real"),
+                            rs.getDate("Fecha_Registro"),
+                            rs.getString("Situacion")
+                    );
+                    lista.add(dto);
+                }
+            }
+        }
+        return lista;
+    }
+
 }

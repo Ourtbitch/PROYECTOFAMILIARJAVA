@@ -78,9 +78,9 @@ public class LoginView extends JFrame implements ActionListener {
                         case 1 ->
                             new MenuAdmin().setVisible(true);
                         case 2 ->
-                            new MenuRol2().setVisible(true);
+                            new MenuIntegranteFamiliar().setVisible(true);
                         default ->
-                            new MenuRol3().setVisible(true);
+                            new MenuCordinador().setVisible(true);
                     }
                     dispose();
                 });

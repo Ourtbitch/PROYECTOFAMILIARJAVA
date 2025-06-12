@@ -5,7 +5,9 @@
 package com.ahorrofamiliar.views;
 
 import com.ahorrofamiliar.dto.MetaAporteDTO;
+import com.ahorrofamiliar.models.MetaAporte;
 import com.ahorrofamiliar.service.MetaAporteService;
+import static com.ahorrofamiliar.views.DetMeta.accionx;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -16,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alondra
  */
-public class BusMetaAporte extends javax.swing.JFrame {
+public class DetMetaAporteXMeta extends javax.swing.JFrame {
 
     private MetaAporteService metaAporteService;
+    public static String accionx;
 
-    public BusMetaAporte() {
+    public DetMetaAporteXMeta() {
         initComponents();
         metaAporteService = new MetaAporteService();
+        LlenarTabla();
     }
 
     /**
@@ -36,18 +40,10 @@ public class BusMetaAporte extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jtdni = new javax.swing.JTextField();
-        jtBuscarporDni = new javax.swing.JButton();
-        jtBuscarTodo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtBusqueda = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jBregistrar = new javax.swing.JButton();
-        jBEliminar = new javax.swing.JButton();
-        jbEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,52 +60,7 @@ public class BusMetaAporte extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 6, 40, -1));
-
-        jLabel2.setText("Dni");
-
-        jtBuscarporDni.setText("Buscar");
-        jtBuscarporDni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtBuscarporDniActionPerformed(evt);
-            }
-        });
-
-        jtBuscarTodo.setText("BuscarTodo");
-        jtBuscarTodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtBuscarTodoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtdni, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jtBuscarporDni, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(jtBuscarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtBuscarporDni)
-                    .addComponent(jtBuscarTodo))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 640, 80));
+        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 6, 40, 30));
 
         jtBusqueda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,118 +118,31 @@ public class BusMetaAporte extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 640, 320));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 640, 320));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("MetaAporte");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
 
-        jBregistrar.setText("Registrar");
-        jBregistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBregistrarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jBregistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 480, -1, -1));
-
-        jBEliminar.setText("Eliminar");
-        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jBEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, -1, -1));
-
-        jbEditar.setText("Modificar");
-        jbEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEditarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jbEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 480, -1, -1));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 6, 690, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtBuscarporDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarporDniActionPerformed
-        String dni = jtdni.getText().trim();
-
-        if (dni.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            List<MetaAporteDTO> lista = metaAporteService.buscarAportesPorDni(dni);
-            actualizarTabla(lista);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar aportes: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_jtBuscarporDniActionPerformed
-
-    private void jtBuscarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarTodoActionPerformed
-        try {
-            List<MetaAporteDTO> lista = metaAporteService.listarTodosAportes();
-            actualizarTabla(lista);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al listar aportes: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jtBuscarTodoActionPerformed
-
-    private void jBregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBregistrarActionPerformed
-        new com.ahorrofamiliar.views.DetMetaAporte().setVisible(true);
-    }//GEN-LAST:event_jBregistrarActionPerformed
-
-    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        int fila = jtBusqueda.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un aporte para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int idAporte = (int) jtBusqueda.getValueAt(fila, 0);
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este aporte?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            try {
-                metaAporteService.eliminarAporte(idAporte);
-                JOptionPane.showMessageDialog(this, "Aporte eliminado correctamente.");
-                // Refrescar tabla después de eliminar
-                List<MetaAporteDTO> lista = metaAporteService.listarTodosAportes();
-                actualizarTabla(lista);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al eliminar aporte: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jBEliminarActionPerformed
-
-    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-
-        int fila = jtBusqueda.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un aporte para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int idAporte = (int) jtBusqueda.getValueAt(fila, 0);
-        DetMetaAporte detMeta = new DetMetaAporte();
-        detMeta.cargarDatosEnFormulario(idAporte);
-        detMeta.setVisible(true);
-    }//GEN-LAST:event_jbEditarActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -300,21 +164,25 @@ public class BusMetaAporte extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BusMetaAporte.class
+            java.util.logging.Logger.getLogger(DetMetaAporteXMeta.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BusMetaAporte.class
+            java.util.logging.Logger.getLogger(DetMetaAporteXMeta.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BusMetaAporte.class
+            java.util.logging.Logger.getLogger(DetMetaAporteXMeta.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BusMetaAporte.class
+            java.util.logging.Logger.getLogger(DetMetaAporteXMeta.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -323,9 +191,19 @@ public class BusMetaAporte extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BusMetaAporte().setVisible(true);
+                new DetMetaAporteXMeta().setVisible(true);
             }
         });
+    }
+    
+    private void LlenarTabla(){
+        try {
+            accionx = CierreMeta.accionx;
+            List<MetaAporteDTO> lista = metaAporteService.listarAportesPorMETA(Integer.parseInt(accionx));
+            actualizarTabla(lista);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar aportes: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void actualizarTabla(List<MetaAporteDTO> lista) {
@@ -366,18 +244,10 @@ public class BusMetaAporte extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jBEliminar;
-    private javax.swing.JButton jBregistrar;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbEditar;
-    private javax.swing.JButton jtBuscarTodo;
-    private javax.swing.JButton jtBuscarporDni;
     private javax.swing.JTable jtBusqueda;
-    private javax.swing.JTextField jtdni;
     // End of variables declaration//GEN-END:variables
 }

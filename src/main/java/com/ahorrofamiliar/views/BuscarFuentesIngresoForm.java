@@ -36,13 +36,40 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
         // Estilo para botones
         btnBuscar.setBackground(new java.awt.Color(0, 120, 215));
         btnBuscar.setForeground(java.awt.Color.WHITE);
+
+        // Actualizar los criterios de búsqueda
+        cbCriteriosBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"Todos", "Usuario", "Categoría", "Monto"}));
     }
 
     private void cargarTodosLosRegistros() {
         FuenteIngresoDAO dao = new FuenteIngresoDAO();
-        
-        List<FuenteIngreso> ingresos = dao.obtenerIngresosPorUsuario(0); 
+        List<FuenteIngreso> ingresos = dao.obtenerTodosLosIngresos();
         actualizarTabla(ingresos);
+    }
+
+    private boolean validarEntrada(String criterio, String valor) {
+        if (valor.isEmpty() && !criterio.equals("Todos")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor para buscar",
+                    "Campo vacío", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        if (criterio.equals("Usuario") || criterio.equals("Monto")) {
+            try {
+                if (criterio.equals("Usuario")) {
+                    Integer.parseInt(valor);
+                } else {
+                    Double.parseDouble(valor);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Para " + criterio + " ingrese un número válido",
+                        "Error en formato", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -75,19 +102,24 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
 
         tblResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID Ingreso", "Usuario", "Descripcion", "Monto", "Fecha"
+                "ID Ingreso", "Usuario", "Descripcion", "Monto", "Fecha", "Categoria"
             }
         ));
         tblResultados.setToolTipText("");
         jScrollPane1.setViewportView(tblResultados);
 
-        cbCriteriosBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Descripcion", "Categoria", "Fecha" }));
+        cbCriteriosBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Categoria", "Monto" }));
+        cbCriteriosBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCriteriosBusquedaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Buscar por:");
 
@@ -146,7 +178,7 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel3))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -185,6 +217,10 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
         String criterio = cbCriteriosBusqueda.getSelectedItem().toString();
         String valor = txtBusqueda.getText().trim();
 
+        if (!validarEntrada(criterio, valor)) {
+            return;
+        }
+
         FuenteIngresoDAO dao = new FuenteIngresoDAO();
         List<FuenteIngreso> resultados;
 
@@ -194,11 +230,12 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
                     int idUsuario = Integer.parseInt(valor);
                     resultados = dao.obtenerIngresosPorUsuario(idUsuario);
                     break;
-                case "Descripción":
-                    resultados = dao.buscarPorDescripcion(valor);
-                    break;
                 case "Categoría":
                     resultados = dao.buscarPorCategoria(valor);
+                    break;
+                case "Monto":
+                    double monto = Double.parseDouble(valor);
+                    resultados = dao.buscarPorMonto(monto);
                     break;
                 default: // "Todos"
                     resultados = dao.obtenerTodosLosIngresos();
@@ -208,8 +245,10 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
             actualizarTabla(resultados);
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Para búsqueda por usuario ingrese un número válido",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Para búsqueda por usuario ingrese un número entero\n"
+                    + "Para búsqueda por monto ingrese un número decimal",
+                    "Error en formato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en búsqueda: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -251,6 +290,10 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
         this.dispose(); // Cierra solo este formulario
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    private void cbCriteriosBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCriteriosBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCriteriosBusquedaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -276,6 +319,8 @@ public class BuscarFuentesIngresoForm extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(BuscarFuentesIngresoForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

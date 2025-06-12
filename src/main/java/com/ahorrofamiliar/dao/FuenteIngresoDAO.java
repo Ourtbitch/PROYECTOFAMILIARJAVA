@@ -222,35 +222,6 @@ public class FuenteIngresoDAO {
         return ingresos;
     }
 
-    public List<FuenteIngreso> buscarPorDescripcion(String texto) {
-        Connection conexion = null;
-        PreparedStatement statement = null;
-        ResultSet resultado = null;
-        List<FuenteIngreso> ingresos = new ArrayList<>();
-
-        try {
-            conexion = DatabaseConnection.getConnection();
-            String sql = "SELECT id_ingreso, id_usuario, descripcion, monto, fecha_ingreso, categoria, observaciones "
-                    + "FROM fuentes_ingreso WHERE descripcion LIKE ?";
-            statement = conexion.prepareStatement(sql);
-            statement.setString(1, "%" + texto + "%");
-            resultado = statement.executeQuery();
-
-            while (resultado.next()) {
-                FuenteIngreso ingreso = new FuenteIngreso();
-                // ... (igual que en obtenerTodosLosIngresos)
-                ingresos.add(ingreso);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al buscar por descripción: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // Cierra recursos
-        }
-
-        return ingresos;
-    }
-
     public List<FuenteIngreso> buscarPorCategoria(String categoria) {
         Connection conexion = null;
         PreparedStatement statement = null;
@@ -267,7 +238,14 @@ public class FuenteIngresoDAO {
 
             while (resultado.next()) {
                 FuenteIngreso ingreso = new FuenteIngreso();
-                // ... (igual que en obtenerTodosLosIngresos)
+                ingreso.setIdIngreso(resultado.getInt("id_ingreso"));
+                ingreso.setIdUsuario(resultado.getInt("id_usuario"));
+                ingreso.setDescripcion(resultado.getString("descripcion"));
+                ingreso.setMonto(resultado.getDouble("monto"));
+                ingreso.setFechaIngreso(resultado.getDate("fecha_ingreso"));
+                ingreso.setCategoria(resultado.getString("categoria"));
+                ingreso.setObservaciones(resultado.getString("observaciones"));
+
                 ingresos.add(ingreso);
             }
         } catch (SQLException e) {
@@ -275,6 +253,43 @@ public class FuenteIngresoDAO {
             e.printStackTrace();
         } finally {
             // Cierra recursos
+        }
+
+        return ingresos;
+    }
+
+    // jimmmy
+    public List<FuenteIngreso> buscarPorMonto(double monto) {
+        Connection conexion = null;
+        PreparedStatement statement = null;
+        ResultSet resultado = null;
+        List<FuenteIngreso> ingresos = new ArrayList<>();
+
+        try {
+            conexion = DatabaseConnection.getConnection();
+            String sql = "SELECT id_ingreso, id_usuario, descripcion, monto, fecha_ingreso, categoria, observaciones "
+                    + "FROM fuentes_ingreso WHERE monto = ?";
+            statement = conexion.prepareStatement(sql);
+            statement.setDouble(1, monto);
+            resultado = statement.executeQuery();
+
+            while (resultado.next()) {
+                FuenteIngreso ingreso = new FuenteIngreso();
+                ingreso.setIdIngreso(resultado.getInt("id_ingreso"));
+                ingreso.setIdUsuario(resultado.getInt("id_usuario"));
+                ingreso.setDescripcion(resultado.getString("descripcion"));
+                ingreso.setMonto(resultado.getDouble("monto"));
+                ingreso.setFechaIngreso(resultado.getDate("fecha_ingreso"));
+                ingreso.setCategoria(resultado.getString("categoria"));
+                ingreso.setObservaciones(resultado.getString("observaciones"));
+
+                ingresos.add(ingreso);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar por monto: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // jimmy
         }
 
         return ingresos;

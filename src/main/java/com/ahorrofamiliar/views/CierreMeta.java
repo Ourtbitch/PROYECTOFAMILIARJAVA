@@ -6,6 +6,7 @@ package com.ahorrofamiliar.views;
 
 import com.ahorrofamiliar.dao.MetaDAO;
 import com.ahorrofamiliar.models.Meta;
+import static com.ahorrofamiliar.views.BusMeta.accionx;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alondra
  */
-public class BusMeta extends javax.swing.JFrame {
+public class CierreMeta extends javax.swing.JFrame {
 
     /**
      * Creates new form BusMeta
@@ -30,7 +31,7 @@ public class BusMeta extends javax.swing.JFrame {
     public static String Fecha_Fin;
     public static String Estado;
 
-    public BusMeta() {
+    public CierreMeta() {
         initComponents();
         IniciarFormulario();
         LlenarTabla();
@@ -50,19 +51,20 @@ public class BusMeta extends javax.swing.JFrame {
         if (t.equals("--Todos--")) {
             t = "";
         }
-        list = c.consulta(jtnombre.getText(), t);
+        list = c.consulta_cierre(t);
 
         DefaultTableModel modelo = new DefaultTableModel();
-        String[] columnNames = {"Id", "Nombre", "Importe", "Fecha_Creacion", "Fecha_Fin", "Estado"};
+        String[] columnNames = {"Id", "Nombre", "Importe", "Importe Acumulado", "Fecha_Creacion", "Fecha_Fin", "Estado"};
         modelo.setColumnIdentifiers(columnNames);
         Object[] fila = new Object[modelo.getColumnCount()];
         for (int i = 0; i < list.size(); i++) {
             fila[0] = list.get(i).getId();
             fila[1] = list.get(i).getNombre_meta();
-            fila[2] = list.get(i).getImporte();
-            fila[3] = list.get(i).getFecha_creacion();
-            fila[4] = list.get(i).getFecha_fin();
-            fila[5] = list.get(i).getEstado();
+            fila[2] = list.get(i).getImporte_Final_e();
+            fila[3] = list.get(i).getImporte_Final_r();
+            fila[4] = list.get(i).getFecha_creacion();
+            fila[5] = list.get(i).getFecha_fin();
+            fila[6] = list.get(i).getEstado();
             modelo.addRow(fila);//agregamos una fila a nuestro modelo de tabla
         }
 
@@ -84,8 +86,6 @@ public class BusMeta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jtnombre = new javax.swing.JTextField();
         jcEstado = new javax.swing.JComboBox<>();
         jbBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -95,17 +95,21 @@ public class BusMeta extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jbEliminar = new javax.swing.JButton();
-        jbModificar = new javax.swing.JButton();
-        jbRegistrar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jtaniomes = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Nombre");
-
         jcEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Cerrado", "Inhabilitado" }));
+        jcEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcEstadoActionPerformed(evt);
+            }
+        });
 
         jbBuscar.setText("Buscar");
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,25 +125,19 @@ public class BusMeta extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jcEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                 .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbBuscar)
                     .addComponent(jLabel3))
@@ -150,20 +148,20 @@ public class BusMeta extends javax.swing.JFrame {
 
         jtBusqueda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Importe", "Fecha_Creacion", "Fecha_Fin", "Estado"
+                "Id", "Nombre", "Importe_Estimado", "Importe_Acumulado", "Fecha_Creacion", "Fecha_Fin", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -216,29 +214,33 @@ public class BusMeta extends javax.swing.JFrame {
         jLabel1.setText("Meta");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 14, 80, -1));
 
-        jbEliminar.setText("Eliminar");
+        jbEliminar.setText("Calcular Montos");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, -1, -1));
+        jPanel1.add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 450, 130, -1));
 
-        jbModificar.setText("Modificar");
-        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Anio - Mes");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 110, -1));
+
+        jtaniomes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbModificarActionPerformed(evt);
+                jtaniomesActionPerformed(evt);
             }
         });
-        jPanel1.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, -1, -1));
+        jPanel1.add(jtaniomes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 450, 129, -1));
 
-        jbRegistrar.setText("Registrar");
-        jbRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Ver Detalle");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbRegistrarActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jbRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 450, 120, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,57 +276,55 @@ public class BusMeta extends javax.swing.JFrame {
         int row = table.rowAtPoint(point_);
         if (evt.getClickCount() == 1) {
             accionx = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 0).toString();//id
-            nombre = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 1).toString();
-            Importe = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 2).toString();
-            Fecha_Creacion = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 3).toString();
-            Fecha_Fin = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 4).toString();
-            Estado = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 5).toString();
 
         } else {
             accionx = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 0).toString();//id
-            nombre = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 1).toString();
-            Importe = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 2).toString();
-            Fecha_Creacion = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 3).toString();
-            Fecha_Fin = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 4).toString();
-            Estado = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 5).toString();
 
         }
     }//GEN-LAST:event_jtBusquedaMousePressed
 
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (accionx.equals("0")) {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un registro.");
+            } else if (jtaniomes.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe ingresar año y mes para el calculo");
+            }else {
+                boolean result = false;
+                int Id = Integer.parseInt(accionx);
+                c.CalculaMontosMeta(Id, jtaniomes.getText());//actualiza a inactivo
+                JOptionPane.showMessageDialog(null, "Se actualizaron los montos.");
+                LlenarTabla();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
+        }
+
+
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jtaniomesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtaniomesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtaniomesActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
             if (accionx.equals("0")) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
             } else {
-                DetMeta entrar = new DetMeta();
+                DetMetaAporteXMeta entrar = new DetMetaAporteXMeta();
                 entrar.setVisible(true);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
         }
-    }//GEN-LAST:event_jbModificarActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+    private void jcEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcEstadoActionPerformed
         // TODO add your handling code here:
-        boolean result = false;
-        int Id = Integer.parseInt(accionx);
-        c.anular(Id, "I");//actualiza a inactivo
-        JOptionPane.showMessageDialog(null, "Se Elimino el registro.");
-        LlenarTabla();
-    }//GEN-LAST:event_jbEliminarActionPerformed
-
-    private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
-        // TODO add your handling code here:
-        accionx = "0";
-        nombre = "";
-        Importe = "";
-        Fecha_Creacion = "";
-        Fecha_Fin = "";
-        Estado = "";
-        DetMeta meta = new DetMeta();
-        meta.setVisible(true);
-    }//GEN-LAST:event_jbRegistrarActionPerformed
+    }//GEN-LAST:event_jcEstadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,14 +343,18 @@ public class BusMeta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BusMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CierreMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BusMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CierreMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BusMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CierreMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BusMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CierreMeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -359,13 +363,14 @@ public class BusMeta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BusMeta().setVisible(true);
+                new CierreMeta().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -375,10 +380,8 @@ public class BusMeta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
-    private javax.swing.JButton jbModificar;
-    private javax.swing.JButton jbRegistrar;
     private javax.swing.JComboBox<String> jcEstado;
     private javax.swing.JTable jtBusqueda;
-    private javax.swing.JTextField jtnombre;
+    private javax.swing.JTextField jtaniomes;
     // End of variables declaration//GEN-END:variables
 }

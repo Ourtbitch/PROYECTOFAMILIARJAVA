@@ -62,7 +62,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -114,12 +114,13 @@
         <Component class="javax.swing.JTable" name="tblResultados">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="4">
+              <Table columnCount="6" rowCount="4">
                 <Column editable="true" title="ID Ingreso" type="java.lang.Object"/>
                 <Column editable="true" title="Usuario" type="java.lang.Object"/>
                 <Column editable="true" title="Descripcion" type="java.lang.Object"/>
                 <Column editable="true" title="Monto" type="java.lang.Object"/>
                 <Column editable="true" title="Fecha" type="java.lang.Object"/>
+                <Column editable="true" title="Categoria" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -130,14 +131,16 @@
     <Component class="javax.swing.JComboBox" name="cbCriteriosBusqueda">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
+          <StringArray count="3">
             <StringItem index="0" value="Usuario"/>
-            <StringItem index="1" value="Descripcion"/>
-            <StringItem index="2" value="Categoria"/>
-            <StringItem index="3" value="Fecha"/>
+            <StringItem index="1" value="Categoria"/>
+            <StringItem index="2" value="Monto"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCriteriosBusquedaActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
