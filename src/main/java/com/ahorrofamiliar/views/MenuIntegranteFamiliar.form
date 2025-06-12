@@ -66,14 +66,23 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="BtnAportes" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="387" max="-2" attributes="0"/>
-                      <Component id="btnUsuario" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                      <Component id="btnMeta" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                      <Component id="btnBuscarFIngreso" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFuntesIngreso" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="405" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnMeta" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                              <Component id="jButton2" max="32767" attributes="0"/>
+                              <Component id="btnMeta1" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="388" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="BtnAportes" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarFIngreso" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnFuntesIngreso" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnGestionContrasena" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="299" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,35 +92,33 @@
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnUsuario" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
-                          <Component id="btnFuntesIngreso" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnMeta" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnBuscarFIngreso" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnBuscarFIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMeta1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="BtnAportes" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="152" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnMeta" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFuntesIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="BtnAportes" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnGestionContrasena" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="193" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnUsuario">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Usuario"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuarioActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btnMeta">
           <Properties>
             <Property name="text" type="java.lang.String" value="Meta"/>
@@ -136,6 +143,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarFIngresoActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btnGestionContrasena">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gestionar Contrase&#xf1;a"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestionContrasenaActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JButton" name="BtnAportes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Aportes"/>
@@ -154,6 +169,22 @@
             </Property>
             <Property name="text" type="java.lang.String" value="MENU INTEGRANTE FAMILIAR"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estado Usuario"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMeta1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estado Meta"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMeta1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

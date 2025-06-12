@@ -69,12 +69,21 @@
                       <Component id="jLabel1" min="-2" pref="350" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnUsuario" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                              <Component id="btnMeta" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                              <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="btnUsuario" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnMeta1" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="btnMeta" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                      <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="388" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="388" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="BtnAportes" min="-2" max="-2" attributes="0"/>
                               <Component id="btnBuscarFIngreso" min="-2" max="-2" attributes="0"/>
@@ -96,8 +105,9 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnBuscarFIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnMeta1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnMeta" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnFuntesIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -112,7 +122,7 @@
                       <Component id="btnGestionContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="193" max="32767" attributes="0"/>
+                  <EmptySpace pref="188" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -191,6 +201,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMeta1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estado Meta"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMeta1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

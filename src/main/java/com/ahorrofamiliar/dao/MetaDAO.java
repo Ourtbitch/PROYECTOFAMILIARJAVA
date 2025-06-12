@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MetaDAO {
@@ -248,4 +249,236 @@ public class MetaDAO {
             e.printStackTrace();
         }
     }
+    // ======= NUEVOS MÉTODOS AGREGADOS PARA CONSULTAR ESTADO DE META =======
+    
+    // Clase interna para representar el estado completo de una meta
+    public static class EstadoMeta {
+        private int id;
+        private String nombreMeta;
+        private double importeObjetivo;
+        private Date fechaCreacion;
+        private Date fechaFin;
+        private String estado;
+        private String situacion;
+        private double totalAportado;
+        private double montoFaltante;
+        private double porcentajeAvance;
+        private int totalAportes;
+        
+        // Constructor
+        public EstadoMeta(int id, String nombreMeta, double importeObjetivo, 
+                         Date fechaCreacion, Date fechaFin, String estado, 
+                         String situacion, double totalAportado, 
+                         double montoFaltante, double porcentajeAvance, int totalAportes) {
+            this.id = id;
+            this.nombreMeta = nombreMeta;
+            this.importeObjetivo = importeObjetivo;
+            this.fechaCreacion = fechaCreacion;
+            this.fechaFin = fechaFin;
+            this.estado = estado;
+            this.situacion = situacion;
+            this.totalAportado = totalAportado;
+            this.montoFaltante = montoFaltante;
+            this.porcentajeAvance = porcentajeAvance;
+            this.totalAportes = totalAportes;
+        }
+        
+        // Getters
+        public int getId() { return id; }
+        public String getNombreMeta() { return nombreMeta; }
+        public double getImporteObjetivo() { return importeObjetivo; }
+        public Date getFechaCreacion() { return fechaCreacion; }
+        public Date getFechaFin() { return fechaFin; }
+        public String getEstado() { return estado; }
+        public String getSituacion() { return situacion; }
+        public double getTotalAportado() { return totalAportado; }
+        public double getMontoFaltante() { return montoFaltante; }
+        public double getPorcentajeAvance() { return porcentajeAvance; }
+        public int getTotalAportes() { return totalAportes; }
+        
+        public String getSituacionDescripcion() {
+            switch (situacion) {
+                case "A": return "Activo";
+                case "I": return "Inactivo";
+                case "C": return "Cerrado";
+                default: return situacion;
+            }
+        }
+    }
+    
+    /**
+     * Consulta todas las metas con su estado y avance
+     */
+    public List<EstadoMeta> consultarTodasLasMetasConEstado() throws SQLException {
+        return consultarEstadoMetas("", "");
+    }
+    
+    /**
+     * Consulta metas filtradas por nombre y/o situación con información completa del estado
+     * @param nombreMeta Nombre de la meta a buscar (puede ser vacío)
+     * @param situacion Situación de la meta (A, I, C o vacío para todas)
+     * @return Lista de EstadoMeta con información completa
+     */
+    public List<EstadoMeta> consultarEstadoMetas(String nombreMeta, String situacion) throws SQLException {
+        List<EstadoMeta> metas = new ArrayList<>();
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT m.id, m.nombre_meta, m.Importe, m.fecha_creacion, m.Fecha_fin, ");
+        sql.append("m.Estado, m.Situacion, ");
+        sql.append("COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0) as total_aportado, ");
+        sql.append("(m.Importe - COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0)) as monto_faltante, ");
+        sql.append("ROUND((COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0) / m.Importe) * 100, 2) as porcentaje_avance, ");
+        sql.append("COUNT(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.id ELSE NULL END) as total_aportes ");
+        sql.append("FROM meta m ");
+        sql.append("LEFT JOIN meta_aporte ma ON m.id = ma.id_meta ");
+        sql.append("WHERE 1=1 ");
+        
+        // Aplicar filtros
+        if (nombreMeta != null && !nombreMeta.trim().isEmpty()) {
+            sql.append("AND m.nombre_meta LIKE ? ");
+        }
+        if (situacion != null && !situacion.trim().isEmpty()) {
+            sql.append("AND m.Situacion = ? ");
+        }
+        
+        sql.append("GROUP BY m.id, m.nombre_meta, m.Importe, m.fecha_creacion, m.Fecha_fin, m.Estado, m.Situacion ");
+        sql.append("ORDER BY m.fecha_creacion DESC");
+        
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+            
+            int paramIndex = 1;
+            
+            if (nombreMeta != null && !nombreMeta.trim().isEmpty()) {
+                pstmt.setString(paramIndex++, "%" + nombreMeta.trim() + "%");
+            }
+            if (situacion != null && !situacion.trim().isEmpty()) {
+                pstmt.setString(paramIndex++, situacion.trim());
+            }
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    EstadoMeta meta = new EstadoMeta(
+                        rs.getInt("id"),
+                        rs.getString("nombre_meta"),
+                        rs.getDouble("Importe"),
+                        rs.getDate("fecha_creacion"),
+                        rs.getDate("Fecha_fin"),
+                        rs.getString("Estado"),
+                        rs.getString("Situacion"),
+                        rs.getDouble("total_aportado"),
+                        rs.getDouble("monto_faltante"),
+                        rs.getDouble("porcentaje_avance"),
+                        rs.getInt("total_aportes")
+                    );
+                    metas.add(meta);
+                }
+            }
+        }
+        
+        return metas;
+    }
+    
+    /**
+     * Obtiene el detalle completo de una meta específica
+     */
+    public EstadoMeta obtenerDetalleMetaPorId(int idMeta) throws SQLException {
+        String sql = "SELECT m.id, m.nombre_meta, m.Importe, m.fecha_creacion, m.Fecha_fin, " +
+                    "m.Estado, m.Situacion, " +
+                    "COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0) as total_aportado, " +
+                    "(m.Importe - COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0)) as monto_faltante, " +
+                    "ROUND((COALESCE(SUM(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.aporte_real ELSE 0 END), 0) / m.Importe) * 100, 2) as porcentaje_avance, " +
+                    "COUNT(CASE WHEN ma.Situacion IN ('A', 'ACT') THEN ma.id ELSE NULL END) as total_aportes " +
+                    "FROM meta m " +
+                    "LEFT JOIN meta_aporte ma ON m.id = ma.id_meta " +
+                    "WHERE m.id = ? " +
+                    "GROUP BY m.id, m.nombre_meta, m.Importe, m.fecha_creacion, m.Fecha_fin, m.Estado, m.Situacion";
+        
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, idMeta);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new EstadoMeta(
+                        rs.getInt("id"),
+                        rs.getString("nombre_meta"),
+                        rs.getDouble("Importe"),
+                        rs.getDate("fecha_creacion"),
+                        rs.getDate("Fecha_fin"),
+                        rs.getString("Estado"),
+                        rs.getString("Situacion"),
+                        rs.getDouble("total_aportado"),
+                        rs.getDouble("monto_faltante"),
+                        rs.getDouble("porcentaje_avance"),
+                        rs.getInt("total_aportes")
+                    );
+                }
+            }
+        }
+        
+        return null; // Meta no encontrada
+    }
+    
+    /**
+     * Obtiene estadísticas generales de las metas
+     */
+    public EstadisticasMetas obtenerEstadisticasGenerales() throws SQLException {
+        String sql = "SELECT " +
+                    "COUNT(*) as total_metas, " +
+                    "SUM(CASE WHEN Situacion = 'A' THEN 1 ELSE 0 END) as metas_activas, " +
+                    "SUM(CASE WHEN Situacion = 'C' THEN 1 ELSE 0 END) as metas_cerradas, " +
+                    "SUM(CASE WHEN Situacion = 'I' THEN 1 ELSE 0 END) as metas_inactivas, " +
+                    "AVG(Importe) as promedio_importe, " +
+                    "SUM(Importe) as total_importe_objetivo " +
+                    "FROM meta";
+        
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            if (rs.next()) {
+                return new EstadisticasMetas(
+                    rs.getInt("total_metas"),
+                    rs.getInt("metas_activas"),
+                    rs.getInt("metas_cerradas"),
+                    rs.getInt("metas_inactivas"),
+                    rs.getDouble("promedio_importe"),
+                    rs.getDouble("total_importe_objetivo")
+                );
+            }
+        }
+        
+        return new EstadisticasMetas(0, 0, 0, 0, 0.0, 0.0);
+    }
+    
+    // Clase interna para estadísticas
+    public static class EstadisticasMetas {
+        private int totalMetas;
+        private int metasActivas;
+        private int metasCerradas;
+        private int metasInactivas;
+        private double promedioImporte;
+        private double totalImporteObjetivo;
+        
+        public EstadisticasMetas(int totalMetas, int metasActivas, int metasCerradas, 
+                               int metasInactivas, double promedioImporte, double totalImporteObjetivo) {
+            this.totalMetas = totalMetas;
+            this.metasActivas = metasActivas;
+            this.metasCerradas = metasCerradas;
+            this.metasInactivas = metasInactivas;
+            this.promedioImporte = promedioImporte;
+            this.totalImporteObjetivo = totalImporteObjetivo;
+        }
+        
+        // Getters
+        public int getTotalMetas() { return totalMetas; }
+        public int getMetasActivas() { return metasActivas; }
+        public int getMetasCerradas() { return metasCerradas; }
+        public int getMetasInactivas() { return metasInactivas; }
+        public double getPromedioImporte() { return promedioImporte; }
+        public double getTotalImporteObjetivo() { return totalImporteObjetivo; }
+    }
+
 }

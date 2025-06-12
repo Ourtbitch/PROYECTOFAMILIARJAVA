@@ -30,12 +30,14 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        btnUsuario = new javax.swing.JButton();
         btnMeta = new javax.swing.JButton();
         btnFuntesIngreso = new javax.swing.JButton();
         btnBuscarFIngreso = new javax.swing.JButton();
+        btnGestionContrasena = new javax.swing.JButton();
         BtnAportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        btnMeta1 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -44,13 +46,6 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
-
-        btnUsuario.setText("Usuario");
-        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuarioActionPerformed(evt);
-            }
-        });
 
         btnMeta.setText("Meta");
         btnMeta.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +68,13 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
             }
         });
 
+        btnGestionContrasena.setText("Gestionar Contraseña");
+        btnGestionContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionContrasenaActionPerformed(evt);
+            }
+        });
+
         BtnAportes.setText("Aportes");
         BtnAportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +86,20 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MENU INTEGRANTE FAMILIAR");
 
+        jButton2.setText("Estado Usuario");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        btnMeta1.setText("Estado Meta");
+        btnMeta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeta1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -91,13 +107,19 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnAportes)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarFIngreso)
-                    .addComponent(btnFuntesIngreso))
-                .addContainerGap(299, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMeta1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(388, 388, 388)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnAportes)
+                            .addComponent(btnBuscarFIngreso)
+                            .addComponent(btnFuntesIngreso)
+                            .addComponent(btnGestionContrasena))))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,19 +127,23 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(btnUsuario)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarFIngreso)
+                    .addComponent(btnMeta1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMeta)
+                    .addComponent(btnFuntesIngreso))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(btnFuntesIngreso))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(BtnAportes)
                         .addGap(18, 18, 18)
-                        .addComponent(btnMeta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarFIngreso)))
-                .addGap(18, 18, 18)
-                .addComponent(BtnAportes)
-                .addContainerGap(152, Short.MAX_VALUE))
+                        .addComponent(btnGestionContrasena))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jButton2)))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,12 +171,6 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
     
           
       
-    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        // TODO add your handling code here:
-        BusUsuario consul= new BusUsuario();
-        consul.setVisible(true);
-    }//GEN-LAST:event_btnUsuarioActionPerformed
-
     private void btnFuntesIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuntesIngresoActionPerformed
         // TODO add your handling code here:
         
@@ -159,6 +179,37 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
         this.setVisible(false); // Solo oculta el menú
            
     }//GEN-LAST:event_btnFuntesIngresoActionPerformed
+
+    private void btnGestionContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionContrasenaActionPerformed
+        // TODO add your handling code here:
+        
+        // Abrir ventana de Gestión de Contraseña
+        GestionContrasenaForm gestionContrasenaForm = new GestionContrasenaForm(1); // Pasar el ID de usuario adecuado
+        gestionContrasenaForm.setVisible(true);
+        this.setVisible(false); // Solo oculta el menú
+    }                                                   
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MenuIntegranteFamiliar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MenuIntegranteFamiliar().setVisible(true);
+            }
+        });
+    
+    }//GEN-LAST:event_btnGestionContrasenaActionPerformed
 
     private void btnBuscarFIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFIngresoActionPerformed
         // TODO add your handling code here:
@@ -178,6 +229,16 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
         consul.setVisible(true);
     }//GEN-LAST:event_btnMetaActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       new com.ahorrofamiliar.views.EstadoUsuarioView().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnMeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeta1ActionPerformed
+        // TODO add your handling code here:
+        ConsultarEstadoMeta consulestame = new ConsultarEstadoMeta();
+        consulestame.setVisible(true);
+    }//GEN-LAST:event_btnMeta1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -187,8 +248,10 @@ public class MenuIntegranteFamiliar extends javax.swing.JFrame {
     private javax.swing.JButton BtnAportes;
     private javax.swing.JButton btnBuscarFIngreso;
     private javax.swing.JButton btnFuntesIngreso;
+    private javax.swing.JButton btnGestionContrasena;
     private javax.swing.JButton btnMeta;
-    private javax.swing.JButton btnUsuario;
+    private javax.swing.JButton btnMeta1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

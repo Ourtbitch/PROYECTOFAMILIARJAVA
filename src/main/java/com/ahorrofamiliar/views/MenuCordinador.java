@@ -39,6 +39,7 @@ public class MenuCordinador extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnMeta1 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -108,6 +109,13 @@ public class MenuCordinador extends javax.swing.JFrame {
             }
         });
 
+        btnMeta1.setText("Estado Meta");
+        btnMeta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeta1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,11 +126,17 @@ public class MenuCordinador extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
-                        .addGap(388, 388, 388)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnMeta1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(249, 249, 249))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnMeta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3)
+                                    .addComponent(jButton2))
+                                .addGap(388, 388, 388)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtnAportes)
                             .addComponent(btnBuscarFIngreso)
@@ -138,8 +152,9 @@ public class MenuCordinador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUsuario)
-                    .addComponent(btnBuscarFIngreso))
-                .addGap(18, 18, 18)
+                    .addComponent(btnBuscarFIngreso)
+                    .addComponent(btnMeta1))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMeta)
                     .addComponent(btnFuntesIngreso))
@@ -151,7 +166,7 @@ public class MenuCordinador extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGestionContrasena)
                     .addComponent(jButton2))
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,6 +267,12 @@ public class MenuCordinador extends javax.swing.JFrame {
         consul.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btnMeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeta1ActionPerformed
+        // TODO add your handling code here:
+        ConsultarEstadoMeta consulestame = new ConsultarEstadoMeta();
+        consulestame.setVisible(true);
+    }//GEN-LAST:event_btnMeta1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,6 +284,7 @@ public class MenuCordinador extends javax.swing.JFrame {
     private javax.swing.JButton btnFuntesIngreso;
     private javax.swing.JButton btnGestionContrasena;
     private javax.swing.JButton btnMeta;
+    private javax.swing.JButton btnMeta1;
     private javax.swing.JButton btnUsuario;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
