@@ -8,8 +8,11 @@ import com.ahorrofamiliar.dao.MetaDAO;
 import com.ahorrofamiliar.models.Meta;
 import static com.ahorrofamiliar.views.BusMeta.accionx;
 import java.awt.Point;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,18 +34,23 @@ public class CierreMeta extends javax.swing.JFrame {
     public static String Fecha_Fin;
     public static String Estado;
 
-    public CierreMeta() {
+    public CierreMeta() throws SQLException {
         initComponents();
         IniciarFormulario();
         LlenarTabla();
     }
 
-    public void IniciarFormulario() {
+    public void IniciarFormulario() throws SQLException {
         jcEstado.removeAllItems();
         jcEstado.addItem("--Todos--");
         jcEstado.addItem("Pendiente");
         jcEstado.addItem("Inhabilitado");
         jcEstado.addItem("Cerrado");
+        ObtenerFecha();
+    }
+    
+    public void ObtenerFecha() throws SQLException{
+        jtaniomes.setText(c.obtenerFechaCierre()); 
     }
 
     public void LlenarTabla() {
@@ -232,7 +240,7 @@ public class CierreMeta extends javax.swing.JFrame {
                 jtaniomesActionPerformed(evt);
             }
         });
-        jPanel1.add(jtaniomes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 450, 129, -1));
+        jPanel1.add(jtaniomes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 450, 190, -1));
 
         jButton2.setText("Ver Detalle");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +269,11 @@ public class CierreMeta extends javax.swing.JFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
         LlenarTabla();
+        try {
+            ObtenerFecha();
+        } catch (SQLException ex) {
+            Logger.getLogger(CierreMeta.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jbBuscarActionPerformed
 
@@ -288,14 +301,15 @@ public class CierreMeta extends javax.swing.JFrame {
         try {
             if (accionx.equals("0")) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un registro.");
-            } else if (jtaniomes.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Debe ingresar año y mes para el calculo");
+            } else if (jtaniomes.getText().equals("SIN FUENTES DE INGRESO") ) {
+                JOptionPane.showMessageDialog(null, "No existe aportes mensuales para la meta.");
             }else {
                 boolean result = false;
                 int Id = Integer.parseInt(accionx);
                 c.CalculaMontosMeta(Id, jtaniomes.getText());//actualiza a inactivo
                 JOptionPane.showMessageDialog(null, "Se actualizaron los montos.");
                 LlenarTabla();
+                ObtenerFecha();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un registro");
@@ -363,7 +377,11 @@ public class CierreMeta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CierreMeta().setVisible(true);
+                try {
+                    new CierreMeta().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CierreMeta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

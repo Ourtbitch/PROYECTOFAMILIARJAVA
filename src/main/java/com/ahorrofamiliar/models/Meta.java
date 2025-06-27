@@ -23,11 +23,16 @@ public class Meta {
     private double Importe_Final_r ;
     private String situacion;
     private String Estado;
+    //por jeremy
+    private String Comentario;
+    //por jimmy
+    private int idCategoria;
+    private String nombreCategoria;
     
      public Meta() {
     }
-
-    public Meta(int id, String nombre_meta, Date Fecha_creacion, Date Fecha_fin, double Importe, double Importe_Inicial_e, double Importe_Final_e, double Importe_Inicial_r, double Importe_Final_r, String situacion, String Estado) {
+                                                                                                                                                                                                                     
+    public Meta(int id, String nombre_meta, Date Fecha_creacion, Date Fecha_fin, double Importe, double Importe_Inicial_e, double Importe_Final_e, double Importe_Inicial_r, double Importe_Final_r, String situacion, String Estado, String Comentario) {
         this.id = id;
         this.nombre_meta = nombre_meta;
         this.Fecha_creacion = Fecha_creacion;
@@ -39,6 +44,15 @@ public class Meta {
         this.Importe_Final_r = Importe_Final_r;
         this.situacion = situacion;
         this.Estado = Estado;
+        this.Comentario = Comentario;
+    }
+
+    public String getComentario() {
+        return Comentario;
+    }
+
+    public void setComentario(String Comentario) {
+        this.Comentario = Comentario;
     }
 
     public String getEstado() {
@@ -131,6 +145,22 @@ public class Meta {
         this.situacion = situacion;
     }
 
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+    
     public String toString() {
         return this.nombre_meta; // o el atributo que quieras mostrar
     }

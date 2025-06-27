@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DatabaseConnection { 
 
-    private static final String URL = "jdbc:mysql://localhost/bd_ahorro?serverTimezone=America/Lima";
+    private static final String URL = "jdbc:mysql://172.17.0.2:3306/bd_ahorro_vff?serverTimezone=America/Lima";
     private static final String USUARIO = "root"; 
-    private static final String CONTRASENIA = "yourpassword"; 
+    private static final String CONTRASENIA = "my-secret-pw"; 
     private static Connection conexion;
     private static boolean driverCargado = false;
 

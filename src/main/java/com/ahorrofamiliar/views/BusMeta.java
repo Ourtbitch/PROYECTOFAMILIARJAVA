@@ -7,8 +7,11 @@ package com.ahorrofamiliar.views;
 import com.ahorrofamiliar.dao.MetaDAO;
 import com.ahorrofamiliar.models.Meta;
 import java.awt.Point;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +32,9 @@ public class BusMeta extends javax.swing.JFrame {
     public static String Fecha_Creacion;
     public static String Fecha_Fin;
     public static String Estado;
+    public static String id_categoria;
+    public static String NombreCategoria;
+    public static String Comentario;
 
     public BusMeta() {
         initComponents();
@@ -52,8 +58,8 @@ public class BusMeta extends javax.swing.JFrame {
         }
         list = c.consulta(jtnombre.getText(), t);
 
-        DefaultTableModel modelo = new DefaultTableModel();
-        String[] columnNames = {"Id", "Nombre", "Importe", "Fecha_Creacion", "Fecha_Fin", "Estado"};
+        DefaultTableModel modelo = new DefaultTableModel();                               //, "Comentario"  
+        String[] columnNames = {"Id", "Nombre", "Importe", "Fecha_Creacion", "Fecha_Fin", "Estado","id_categoria","nombre_categoria","Comentario"};
         modelo.setColumnIdentifiers(columnNames);
         Object[] fila = new Object[modelo.getColumnCount()];
         for (int i = 0; i < list.size(); i++) {
@@ -63,6 +69,9 @@ public class BusMeta extends javax.swing.JFrame {
             fila[3] = list.get(i).getFecha_creacion();
             fila[4] = list.get(i).getFecha_fin();
             fila[5] = list.get(i).getEstado();
+            fila[6] = list.get(i).getIdCategoria();
+            fila[7] = list.get(i).getNombreCategoria();
+            fila[8] = list.get(i).getComentario();
             modelo.addRow(fila);//agregamos una fila a nuestro modelo de tabla
         }
 
@@ -279,6 +288,9 @@ public class BusMeta extends javax.swing.JFrame {
             Fecha_Creacion = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 3).toString();
             Fecha_Fin = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 4).toString();
             Estado = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 5).toString();
+            id_categoria = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 6).toString();
+            NombreCategoria = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 7).toString();
+            Comentario = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(),8).toString();
 
         } else {
             accionx = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 0).toString();//id
@@ -287,7 +299,8 @@ public class BusMeta extends javax.swing.JFrame {
             Fecha_Creacion = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 3).toString();
             Fecha_Fin = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 4).toString();
             Estado = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(), 5).toString();
-
+            Comentario = jtBusqueda.getValueAt(jtBusqueda.getSelectedRow(),6).toString();
+  
         }
     }//GEN-LAST:event_jtBusquedaMousePressed
 
@@ -315,15 +328,20 @@ public class BusMeta extends javax.swing.JFrame {
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
-        // TODO add your handling code here:
-        accionx = "0";
-        nombre = "";
-        Importe = "";
-        Fecha_Creacion = "";
-        Fecha_Fin = "";
-        Estado = "";
-        DetMeta meta = new DetMeta();
-        meta.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            accionx = "0";
+            nombre = "";
+            Importe = "";
+            Fecha_Creacion = "";
+            Fecha_Fin = "";
+            Estado = "";
+            Comentario = "";
+            DetMeta meta = new DetMeta();
+            meta.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(BusMeta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbRegistrarActionPerformed
 
     /**

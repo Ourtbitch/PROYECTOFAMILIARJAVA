@@ -4,6 +4,10 @@
  */
 package com.ahorrofamiliar.views;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Alondra
@@ -263,8 +267,12 @@ public class MenuCordinador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        CierreMeta consul= new CierreMeta();
-        consul.setVisible(true);
+        try {
+            CierreMeta consul= new CierreMeta();
+            consul.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuCordinador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnMeta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeta1ActionPerformed

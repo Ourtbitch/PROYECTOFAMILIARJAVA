@@ -4,11 +4,15 @@
  */
 package com.ahorrofamiliar.views;
 
+import com.ahorrofamiliar.dao.MetaCategoriaDAO;
 import com.ahorrofamiliar.dao.MetaDAO;
 import com.ahorrofamiliar.models.Meta;
+import com.ahorrofamiliar.models.MetaCategoria;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,24 +33,35 @@ public class DetMeta extends javax.swing.JFrame {
     public static String Fecha_Creacion;
     public static String Fecha_Fin;
     public static String Estado;
+    public static String id_categoria;
+    public static String NombreCategoria;
+    public static String Comentario;
 
-    public DetMeta() {
+    public DetMeta() throws SQLException {
         initComponents();
         IniciarFormulario();
     }
 
-    public void IniciarFormulario() {
+    public void IniciarFormulario() throws SQLException {
         jcestado.removeAllItems();
         //jcestado.addItem("--Eleg--");
         jcestado.addItem("Pendiente");
         jcestado.addItem("Inhabilitado");
         jcestado.addItem("Cerrado");
 
+        //Llenar combo de categorias
+        List<MetaCategoria> lista = new MetaCategoriaDAO().listarCategoriasActivas();
+        jtcategoria.removeAllItems();
+        for (MetaCategoria objeto : lista) {
+            jtcategoria.addItem(objeto.getNombre());
+        }
+
         accionx = BusMeta.accionx;
         jtnombre.setText("");
         jtImporte.setText("");
         jtFechaInicio.setText("");
         jtFechaFin.setText("");
+        jtComentario.setText("");
         if (accionx.equals("0")) {
             jtid.setText("0");
             Date todayDate = new Date();
@@ -60,6 +75,9 @@ public class DetMeta extends javax.swing.JFrame {
             Fecha_Creacion = BusMeta.Fecha_Creacion;
             Fecha_Fin = BusMeta.Fecha_Fin;
             Estado = BusMeta.Estado;
+            id_categoria = BusMeta.id_categoria;
+            NombreCategoria = BusMeta.NombreCategoria;
+            Comentario = BusMeta.Comentario;
 
             jtid.setText(accionx);
             jcestado.setSelectedItem(Estado);
@@ -67,6 +85,8 @@ public class DetMeta extends javax.swing.JFrame {
             jtImporte.setText(Importe);
             jtFechaInicio.setText(Fecha_Creacion);
             jtFechaFin.setText(Fecha_Fin);
+            jtcategoria.setSelectedItem(NombreCategoria);
+            jtComentario.setText(Comentario);
 
         }
     }
@@ -96,6 +116,10 @@ public class DetMeta extends javax.swing.JFrame {
         jtid = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jcestado = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jtComentario = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jtcategoria = new javax.swing.JComboBox<>();
         jbSalir = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -112,7 +136,19 @@ public class DetMeta extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre");
 
+        jtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtnombreActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Importe");
+
+        jtImporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtImporteActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Fecha Creacion");
 
@@ -131,38 +167,60 @@ public class DetMeta extends javax.swing.JFrame {
 
         jcestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Cerrado", "Inhabilitado" }));
 
+        jLabel7.setText("Comentario");
+
+        jtComentario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtComentarioActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Categoria");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jtFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                                .addComponent(jtnombre))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcestado, 0, 115, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtFechaInicio))
-                            .addComponent(jtnombre)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jtid, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addComponent(jcestado, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jtid, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(123, 123, 123)
+                            .addComponent(btGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jtcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,12 +243,20 @@ public class DetMeta extends javax.swing.JFrame {
                     .addComponent(jcestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jtcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btGuardar)
                     .addComponent(jtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 370, 180));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 430, 260));
 
         jbSalir.setBackground(new java.awt.Color(255, 51, 51));
         jbSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -201,22 +267,17 @@ public class DetMeta extends javax.swing.JFrame {
                 jbSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 40, -1));
+        jPanel1.add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 40, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -224,11 +285,13 @@ public class DetMeta extends javax.swing.JFrame {
 
     private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
         // TODO add your handling code here:
+        int id_cat = 0;
         MetaDAO cm = new MetaDAO();
         Meta m = new Meta();
         m.setId(Integer.parseInt(jtid.getText()));
         m.setNombre_meta(jtnombre.getText());
         m.setImporte(Double.parseDouble(jtImporte.getText()));
+        m.setComentario(jtComentario.getText());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String dateString = jtFechaInicio.getText();
         Date date = null;
@@ -251,8 +314,22 @@ public class DetMeta extends javax.swing.JFrame {
         m.setImporte_Final_e(Double.parseDouble(jtImporte.getText()));
         m.setImporte_Inicial_r(0);
         m.setImporte_Final_r(0);
+        m.setComentario(jtComentario.getText());
+        List<MetaCategoria> lista = null;
+        try {
+            lista = new MetaCategoriaDAO().listarCategoriasActivas();
+            for (MetaCategoria objeto : lista) {
+            if (objeto.getNombre().equals(jtcategoria.getSelectedItem().toString())) {
+                m.setIdCategoria(objeto.getId());
+            }
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetMeta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
         m.setSituacion("A");
+        
         if (m.getId() == 0) {
             cm.adicion(m);
         } else {
@@ -266,6 +343,18 @@ public class DetMeta extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jtComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtComentarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtComentarioActionPerformed
+
+    private void jtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtnombreActionPerformed
+
+    private void jtImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtImporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtImporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,7 +389,11 @@ public class DetMeta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetMeta().setVisible(true);
+                try {
+                    new DetMeta().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DetMeta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -314,13 +407,17 @@ public class DetMeta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<String> jcestado;
+    private javax.swing.JTextField jtComentario;
     private javax.swing.JTextField jtFechaFin;
     private javax.swing.JTextField jtFechaInicio;
     private javax.swing.JTextField jtImporte;
+    private javax.swing.JComboBox<String> jtcategoria;
     private javax.swing.JTextField jtid;
     private javax.swing.JTextField jtnombre;
     // End of variables declaration//GEN-END:variables
