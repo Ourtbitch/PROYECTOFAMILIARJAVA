@@ -95,7 +95,7 @@ public class DetUsuarioIngreso extends javax.swing.JFrame {
 
         jLabel4.setText("Situación:");
 
-        cboSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
+        cboSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I" }));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
